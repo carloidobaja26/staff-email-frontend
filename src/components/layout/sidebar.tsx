@@ -1,8 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { usePathname } from "next/navigation";
-import { ChevronsLeft, ChevronsRight } from "lucide-react";
+import {
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { navigation } from "@/constants/navigation";
@@ -12,7 +16,23 @@ type SidebarProps = {
   collapsed?: boolean;
 };
 
-export function Sidebar({ collapsed = false }: SidebarProps) {
+export function Sidebar({
+  collapsed = false,
+}: SidebarProps) {
+  return (
+    <Suspense
+      fallback={
+        <SidebarFallback collapsed={collapsed} />
+      }
+    >
+      <SidebarContent collapsed={collapsed} />
+    </Suspense>
+  );
+}
+
+function SidebarContent({
+  collapsed = false,
+}: SidebarProps) {
   const pathname = usePathname();
 
   return (
@@ -26,18 +46,18 @@ export function Sidebar({ collapsed = false }: SidebarProps) {
       <div
         className={cn(
           "flex h-16 items-center border-b",
-          collapsed ? "justify-center px-2" : "justify-between px-6"
+          collapsed
+            ? "justify-center px-2"
+            : "justify-between px-6"
         )}
       >
         {!collapsed ? (
-          <>
-            <Link
-              href="/dashboard"
-              className="text-lg font-semibold tracking-tight"
-            >
-              StaffConnect
-            </Link>
-          </>
+          <Link
+            href="/dashboard"
+            className="text-lg font-semibold tracking-tight"
+          >
+            StaffConnect
+          </Link>
         ) : (
           <Link
             href="/dashboard"
@@ -65,13 +85,19 @@ export function Sidebar({ collapsed = false }: SidebarProps) {
 
                   const isActive =
                     pathname === item.href ||
-                    pathname.startsWith(`${item.href}/`);
+                    pathname.startsWith(
+                      `${item.href}/`
+                    );
 
                   return (
                     <Link
                       key={item.href}
                       href={item.href}
-                      title={collapsed ? item.label : undefined}
+                      title={
+                        collapsed
+                          ? item.label
+                          : undefined
+                      }
                       className={cn(
                         "flex h-9 items-center rounded-md text-sm transition-colors",
                         collapsed
@@ -95,6 +121,70 @@ export function Sidebar({ collapsed = false }: SidebarProps) {
           ))}
         </div>
       </nav>
+
+      {/* User */}
+      <div className="border-t p-3">
+        <div
+          className={cn(
+            "flex items-center rounded-md py-2",
+            collapsed
+              ? "justify-center"
+              : "gap-3 px-3"
+          )}
+        >
+          <div className="flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-xs font-medium">
+            CB
+          </div>
+
+          {!collapsed && (
+            <div className="min-w-0">
+              <p className="truncate text-sm font-medium">
+                Carlo Baja
+              </p>
+
+              <p className="truncate text-xs text-muted-foreground">
+                Administrator
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    </aside>
+  );
+}
+
+function SidebarFallback({
+  collapsed = false,
+}: SidebarProps) {
+  return (
+    <aside
+      className={cn(
+        "hidden shrink-0 border-r bg-background md:flex md:flex-col",
+        collapsed ? "w-16" : "w-64"
+      )}
+    >
+      {/* Brand */}
+      <div
+        className={cn(
+          "flex h-16 items-center border-b",
+          collapsed
+            ? "justify-center px-2"
+            : "px-6"
+        )}
+      >
+        {!collapsed ? (
+          <span className="text-lg font-semibold tracking-tight">
+            StaffConnect
+          </span>
+        ) : (
+          <span className="text-lg font-bold">
+            ABC
+          </span>
+        )}
+      </div>
+
+      {/* Keep sidebar space during prerender */}
+      <div className="flex-1" />
 
       {/* User */}
       <div className="border-t p-3">

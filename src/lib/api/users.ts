@@ -4,7 +4,6 @@ import type {
     PagedResponse,
     PaginationRequest,
 } from "@/lib/api/types";
-import { Role } from "./roles";
 
 export type User = {
     id: string;
@@ -14,7 +13,6 @@ export type User = {
     email: string;
     phoneNumber: string | null;
     isActive: boolean;
-    roles: Role[];
 };
 
 export type CreateUserRequest = {

@@ -205,9 +205,9 @@ export function UserTable({ tenantId }: UsersTableProps) {
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                                         Phone
                                     </th>
-                                    <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
+                                    {/* <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                                         Roles
-                                    </th>
+                                    </th> */}
                                     <th className="px-4 py-3 text-left text-sm font-medium text-muted-foreground">
                                         Status
                                     </th>
@@ -247,7 +247,7 @@ export function UserTable({ tenantId }: UsersTableProps) {
                                             </span>
                                         </td>
 
-                                        <td className="px-4 py-4">
+                                        {/* <td className="px-4 py-4">
                                             <div className="flex flex-wrap gap-1">
                                                 {user.roles.map((role) => (
                                                     <Badge
@@ -258,7 +258,7 @@ export function UserTable({ tenantId }: UsersTableProps) {
                                                     </Badge>
                                                 ))}
                                             </div>
-                                        </td>
+                                        </td> */}
 
                                         <td className="px-4 py-4">
                                             <span

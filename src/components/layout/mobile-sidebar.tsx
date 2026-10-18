@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 
@@ -15,6 +16,14 @@ import {
 } from "@/components/ui/sheet";
 
 export function MobileSidebar() {
+  return (
+    <Suspense fallback={<MobileSidebarFallback />}>
+      <MobileSidebarContent />
+    </Suspense>
+  );
+}
+
+function MobileSidebarContent() {
   const pathname = usePathname();
 
   return (
@@ -63,9 +72,7 @@ export function MobileSidebar() {
 
                       const isActive =
                         pathname === item.href ||
-                        pathname.startsWith(
-                          `${item.href}/`
-                        );
+                        pathname.startsWith(`${item.href}/`);
 
                       return (
                         <Link
@@ -80,9 +87,7 @@ export function MobileSidebar() {
                         >
                           <Icon className="size-4 shrink-0" />
 
-                          <span>
-                            {item.label}
-                          </span>
+                          <span>{item.label}</span>
                         </Link>
                       );
                     })}
@@ -113,5 +118,22 @@ export function MobileSidebar() {
         </div>
       </SheetContent>
     </Sheet>
+  );
+}
+
+function MobileSidebarFallback() {
+  return (
+    <Button
+      variant="ghost"
+      size="icon"
+      className="md:hidden"
+      disabled
+    >
+      <Menu className="size-5" />
+
+      <span className="sr-only">
+        Open navigation
+      </span>
+    </Button>
   );
 }
