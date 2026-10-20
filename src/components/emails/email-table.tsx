@@ -245,17 +245,11 @@ export function EmailTable() {
                             </td>
 
                             <td className="px-4 py-3 whitespace-nowrap">
-                                <div>
-                                    <Link
-                                        href={`/emails/${email.id}`}
-                                        className="font-medium hover:underline"
-                                    >
+                                <Button asChild size="sm">
+                                    <Link href={`/emails/${email.id}`}>
                                         View
                                     </Link>
-                                    {/* <p className="mt-1 text-xs text-muted-foreground">
-                                        {email.id}
-                                    </p> */}
-                                </div>
+                                </Button>
                             </td>
                         </tr>
                     ))
